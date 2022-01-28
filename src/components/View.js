@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axiosWithAuth from "../utils/axiosWithAuth";
@@ -10,21 +11,41 @@ const View = (props) => {
   const [editing, setEditing] = useState(false);
   const [editId, setEditId] = useState();
 
+  //   const { id } = props.match.params;
   useEffect(() => {
     axiosWithAuth()
       .get("/articles")
       .then((res) => {
         setArticles(res.data);
-        console.log(res.data);
+        // console.log(res.data);
+        // console.log(articles);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
+  const handleDelete = (id) => {
+    axiosWithAuth()
+      .delete(`/articles/${id}`)
+      .then((resp) => {
+        setArticles(resp.data);
+        // console.log(resp.data);
+      });
+  };
 
-  const handleDelete = (id) => {};
-
-  const handleEdit = (article) => {};
+  const handleEdit = (article) => {
+    // e.preventDefault();
+    axiosWithAuth()
+      .put("http://localhost:5000/api/articles/:id", articles)
+      .then((resp) => {
+        console.log(resp.data);
+        // setArticles(resp.data);
+        // console.log(articles);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const handleEditSelect = (id) => {
     setEditing(true);
