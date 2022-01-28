@@ -36,9 +36,11 @@ const View = (props) => {
   const handleEdit = (article) => {
     // e.preventDefault();
     axiosWithAuth()
-      .put("http://localhost:5000/api/articles/:id", articles)
+      .put(`http://localhost:5000/api/articles/${editId}`, article)
       .then((resp) => {
-        console.log(resp.data);
+        // console.log(resp.data);
+        setArticles(resp.data);
+        setEditing(false);
         // setArticles(resp.data);
         // console.log(articles);
       })
