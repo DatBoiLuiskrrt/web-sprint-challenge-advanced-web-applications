@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 const Login = () => {
   const [form, setForm] = useState({ username: "", password: "" });
   const [error, setError] = useState("");
-  console.log(form);
-  console.log(error);
+
+  const { push } = useHistory();
 
   const handleChange = (e) => {
     setForm({
@@ -20,6 +21,7 @@ const Login = () => {
       .post("http://localhost:5000/api/login", form)
       .then((res) => {
         localStorage.setItem("authToken", res.data.token);
+        push("/view");
       })
       .catch((err) => {
         setError(err.response.data);
@@ -36,16 +38,20 @@ const Login = () => {
             onChange={handleChange}
             value={form.username}
             name="username"
+            id="username"
           ></input>
           <label>password</label>
           <input
             onChange={handleChange}
             value={form.password}
             name="password"
+            id="password"
           ></input>
-          <button type="submit">Login</button>
+          <button id="submit" type="submit">
+            Login
+          </button>
         </form>
-        {error && <h1>{error.error}</h1>}
+        {error && <h1 id="error">{error.error}</h1>}
       </ModalContainer>
     </ComponentContainer>
   );

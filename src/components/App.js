@@ -4,17 +4,19 @@ import styled from "styled-components";
 import Header from "./Header";
 import BloomHeader from "./BloomHeader";
 import Login from "./Login";
-
+import View from "./View";
+import PrivateRoute from "./PrivateRoute";
 const App = () => {
   return (
     <AppContainer>
       <BloomHeader />
       <Header />
       <RouteContainer>
-        <Route exact path="/Login" component={Login}>
+        <Route exact path="/login" component={Login}>
           <Login />
         </Route>
         <Route path="/login"></Route>
+        <PrivateRoute path="/view" component={View} />
       </RouteContainer>
     </AppContainer>
   );
